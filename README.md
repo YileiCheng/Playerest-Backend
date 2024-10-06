@@ -18,8 +18,22 @@ Run a local webserver to test functions
 
 Get all users API (local):
 
-    http://localhost:3000/api/users
+    GET http://localhost:3000/api/users
 
 Get all reviews API (local):
 
-    http://localhost:3000/api/reviews
+    GET http://localhost:3000/api/reviews
+
+Login (local):
+
+    POST http://localhost:3000/api/users/login
+
+    Example body:
+    {"UserId": "Yilei Cheng", "Password": "yileicheng"}
+
+Login (local):
+
+    POST http://localhost:3000/api/users/register
+
+    Example body:
+    {"UserId": "Yilei Cheng 2", "Password": "yileicheng2"}
