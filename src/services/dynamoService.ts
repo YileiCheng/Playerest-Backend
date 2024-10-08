@@ -99,3 +99,35 @@ export const registerUser = async (userId: string, password: string) => {
     throw new Error("Could not register user");
   }
 };
+
+export const getAllComments = async () => {
+  const params = {
+    TableName: "Comments",
+  };
+
+  try {
+    const data = await dynamoDB.scan(params).promise();
+    return data.Items;
+  } catch (error) {
+    console.error("Error getting all comments:", error);
+    throw new Error("Could not fetch comments");
+  }
+};
+
+export const getCommentsByReviewId = async (reviewId: number) => {
+  const params = {
+    TableName: "Comments",
+    FilterExpression: "reviewId = :reviewId",
+    ExpressionAttributeValues: {
+      ":reviewId": reviewId,
+    },
+  };
+
+  try {
+    const data = await dynamoDB.scan(params).promise();
+    return data.Items;
+  } catch (error) {
+    console.error(`Error getting comments for reviewId ${reviewId}:`, error);
+    throw new Error("Could not fetch comments by reviewId");
+  }
+};
