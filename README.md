@@ -20,13 +20,33 @@ Run script
 
     pnpm ts-node fileName.ts
 
-Get all users API (local):
+Get all users (local):
 
     GET http://localhost:3000/api/users
 
-Get all reviews API (local):
+Get all reviews (local):
 
     GET http://localhost:3000/api/reviews
+
+Add a review (local):
+
+    POST http://localhost:3000/api/reviews/add
+
+    Example body:
+    {
+        "imageUrl": "https://cataas.com/cat?random=51",
+        "author": "coolgamer",
+        "title": "Fantastic Game!",
+        "content": "This game offers an incredible experience. I loved the graphics and gameplay.",
+        "rate": 5
+    }
+
+Get reviews by author (local):
+
+    POST http://localhost:3000/api/reviews/by-author
+
+    Example body:
+    {"author": "topgamer", "reviewId": "5"}
 
 Login (local):
 
