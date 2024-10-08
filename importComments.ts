@@ -11,18 +11,14 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient({
   region: process.env.AWS_REGION,
 });
 
-// Define the DynamoDB table name
 const TABLE_NAME = "Comments";
 
-// Function to import comments from CSV to DynamoDB
 const importComments = async () => {
   const comments: any[] = [];
 
-  // Read the CSV file
   fs.createReadStream("dummyComments.csv")
     .pipe(csv())
     .on("data", (row) => {
-      // Push each parsed comment to the array
       comments.push({
         id: Number(row.id),
         author: row.author,
@@ -34,7 +30,6 @@ const importComments = async () => {
     .on("end", async () => {
       console.log(`Parsed ${comments.length} comments from CSV file.`);
 
-      // Loop through all the comments and add them to DynamoDB
       for (const comment of comments) {
         try {
           await addCommentToDynamoDB(comment);
@@ -47,7 +42,6 @@ const importComments = async () => {
     });
 };
 
-// Function to add a comment to the DynamoDB table
 const addCommentToDynamoDB = async (comment: {
   id: number;
   author: string;

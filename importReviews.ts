@@ -16,7 +16,6 @@ const TABLE_NAME = "Reviews";
 const importReviews = async () => {
   const reviews: any[] = [];
 
-  // Read the CSV file
   fs.createReadStream("dummyReviews.csv")
     .pipe(csv())
     .on("data", (row) => {
