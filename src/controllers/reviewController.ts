@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
-import { getAllReviews } from "../services/dynamoService";
-import { addReview } from "../services/dynamoService";
-import { getReviewsByAuthor } from "../services/dynamoService";
+import {
+  getAllReviews,
+  addReview,
+  getReviewsByAuthor,
+  searchReviews,
+} from "../services/dynamoService";
 
 export const getAllReviewsHandler = async (req: Request, res: Response) => {
   try {
@@ -50,5 +53,23 @@ export const getReviewsByAuthorHandler = async (
     res.json(reviews);
   } catch (error) {
     res.status(500).json({ error: "Error fetching reviews by author" });
+  }
+};
+
+export const searchReviewsHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { query } = req.body;
+
+  if (!query) {
+    res.status(400).json({ error: "Query string is required" });
+  }
+
+  try {
+    const reviews = await searchReviews(query);
+    res.json(reviews);
+  } catch (error) {
+    res.status(500).json({ error: "Error searching reviews" });
   }
 };

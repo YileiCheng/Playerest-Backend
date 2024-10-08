@@ -216,3 +216,119 @@ export const getCommentsByReviewId = async (reviewId: number) => {
     throw new Error("Could not fetch comments by reviewId");
   }
 };
+
+export const searchReviews = async (query: string): Promise<any[]> => {
+  try {
+    const params = {
+      TableName: "Reviews",
+    };
+
+    const data = await dynamoDB.scan(params).promise();
+    const reviews = data.Items || [];
+
+    const lowerCaseQuery = query.toLowerCase();
+    const filteredReviews = reviews.filter(
+      (review) =>
+        review.title.toLowerCase().includes(lowerCaseQuery) ||
+        review.content.toLowerCase().includes(lowerCaseQuery) ||
+        review.author.toLowerCase().includes(lowerCaseQuery)
+    );
+
+    return filteredReviews;
+  } catch (error) {
+    console.error("Error searching reviews:", error);
+    throw new Error("Could not search reviews");
+  }
+};
+
+export const getMaxDraftId = async (): Promise<number> => {
+  const params = {
+    TableName: "Drafts",
+    ProjectionExpression: "id",
+  };
+
+  try {
+    const data = await dynamoDB.scan(params).promise();
+    if (!data.Items || data.Items.length === 0) {
+      return 0;
+    }
+
+    const maxId = Math.max(...data.Items.map((item) => item.id));
+    return maxId;
+  } catch (error) {
+    console.error("Error fetching max draft id:", error);
+    throw new Error("Could not fetch max draft id");
+  }
+};
+
+export const storeDraft = async (draft: {
+  imageUrl: string;
+  author: string;
+  title: string;
+  content: string;
+  rate?: number;
+}) => {
+  const currentMaxId = await getMaxDraftId();
+  const newDraftId = currentMaxId + 1;
+
+  const params = {
+    TableName: "Drafts",
+    Item: {
+      id: newDraftId,
+      imageUrl: draft.imageUrl,
+      author: draft.author,
+      title: draft.title,
+      content: draft.content,
+      rate: draft.rate ?? null,
+    },
+  };
+
+  try {
+    await dynamoDB.put(params).promise();
+    return {
+      success: true,
+      message: "Draft stored successfully!",
+      id: newDraftId,
+    };
+  } catch (error) {
+    console.error("Error storing draft:", error);
+    throw new Error("Could not store draft");
+  }
+};
+
+export const publishDraft = async (draftId: number) => {
+  const getParams = {
+    TableName: "Drafts",
+    Key: { id: draftId },
+  };
+
+  try {
+    const draftData = await dynamoDB.get(getParams).promise();
+
+    if (!draftData.Item) {
+      throw new Error(`Draft with id ${draftId} not found`);
+    }
+
+    const draft = draftData.Item;
+
+    await addReview({
+      imageUrl: draft.imageUrl,
+      author: draft.author,
+      title: draft.title,
+      content: draft.content,
+      rate: draft.rate,
+    });
+
+    const deleteParams = {
+      TableName: "Drafts",
+      Key: { id: draftId },
+    };
+
+    await dynamoDB.delete(deleteParams).promise();
+
+    return { success: true, message: "Draft published successfully!" };
+  } catch (error) {
+    console.error("Error publishing draft:", error);
+    throw new Error("Could not publish draft");
+  }
+};

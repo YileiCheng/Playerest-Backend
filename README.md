@@ -72,3 +72,29 @@ Get comments by reviewId (local):
 
     Example body:
     {"reviewId": 5}
+
+Get a list of relevant reviews by query - SEARCH (local):
+
+    POST http://localhost:3000/api/reviews/search
+
+    Example body:
+    {"query": "game"}
+
+Add draft (local):
+
+    POST http://localhost:3000/api/drafts/store
+
+    Example body:
+    {
+        "imageUrl": "https://example.com/image.jpg",
+        "author": "testuser",
+        "title": "Great Game!",
+        "content": "This is a draft review."
+    }
+
+Publish draft using draft id (local):
+
+    POST http://localhost:3000/api/drafts/publish
+
+    Example body:
+    {"draftId": 1}
