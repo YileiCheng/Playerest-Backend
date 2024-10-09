@@ -104,12 +104,11 @@ Publish draft using draft id:
 Upload image to AWS s3 bucket:
 
     POST http://localhost:3000/api/reviews/upload
-
+    
+    Example usage:
     // Create form data object
     const formData = new FormData();
     formData.append('image', selectedFile);
-
-    Example usage:
     const response = await axios.post('http://localhost:3000/upload', formData, {
     headers: {
         'Content-Type': 'multipart/form-data',
