@@ -50,7 +50,7 @@ Get reviews by author:
     Example body:
     {"author": "topgamer", "reviewId": "5"}
 
-Login:
+<!-- Login:
 
     POST http://localhost:3000/api/users/login
 
@@ -62,7 +62,30 @@ Register:
     POST http://localhost:3000/api/users/register
 
     Example body:
-    {"UserId": "Yilei Cheng 2", "Password": "yileicheng2"}
+    {"UserId": "Yilei Cheng 2", "Password": "yileicheng2"} -->
+
+SignUp:
+
+    POST http://localhost:3000/api/users/signup
+
+    Example body:
+    {
+        "email": "test@example.com",
+        "username": "testuser",
+        "password": "password123"
+    }
+    Test Example in FrontEnd:
+    https://docs.amplify.aws/react/build-a-backend/auth/connect-your-frontend/using-the-authenticator/
+
+SignIn:
+
+    POST http://localhost:3000/api/users/signin
+
+    Example body:
+    {
+        "username": "testuser",
+        "password": "password123"
+    }
 
 Get all comments:
 
@@ -104,7 +127,7 @@ Publish draft using draft id:
 Upload image to AWS s3 bucket:
 
     POST http://localhost:3000/api/reviews/upload
-    
+
     Example usage:
     // Create form data object
     const formData = new FormData();
@@ -114,7 +137,7 @@ Upload image to AWS s3 bucket:
         'Content-Type': 'multipart/form-data',
     },
     });
-    
+
     Example response:
     {
         "message": "Image uploaded successfully!",
