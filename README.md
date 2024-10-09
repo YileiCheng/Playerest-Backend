@@ -16,13 +16,37 @@ Run a local webserver to test functions
 
     pnpm run dev
 
-Get all users API (local):
+Run script
+
+    pnpm ts-node fileName.ts
+
+Get all users (local):
 
     GET http://localhost:3000/api/users
 
-Get all reviews API (local):
+Get all reviews (local):
 
     GET http://localhost:3000/api/reviews
+
+Add a review (local):
+
+    POST http://localhost:3000/api/reviews/add
+
+    Example body:
+    {
+        "imageUrl": "https://cataas.com/cat?random=51",
+        "author": "coolgamer",
+        "title": "Fantastic Game!",
+        "content": "This game offers an incredible experience. I loved the graphics and gameplay.",
+        "rate": 5
+    }
+
+Get reviews by author (local):
+
+    POST http://localhost:3000/api/reviews/by-author
+
+    Example body:
+    {"author": "topgamer", "reviewId": "5"}
 
 Login (local):
 
@@ -31,9 +55,46 @@ Login (local):
     Example body:
     {"UserId": "Yilei Cheng", "Password": "yileicheng"}
 
-Login (local):
+Register (local):
 
     POST http://localhost:3000/api/users/register
 
     Example body:
     {"UserId": "Yilei Cheng 2", "Password": "yileicheng2"}
+
+Get all comments (local):
+
+    GET http://localhost:3000/api/comments
+
+Get comments by reviewId (local):
+
+    POST http://localhost:3000/api/comments/review
+
+    Example body:
+    {"reviewId": 5}
+
+Get a list of relevant reviews by query - SEARCH (local):
+
+    POST http://localhost:3000/api/reviews/search
+
+    Example body:
+    {"query": "game"}
+
+Add draft (local):
+
+    POST http://localhost:3000/api/drafts/store
+
+    Example body:
+    {
+        "imageUrl": "https://example.com/image.jpg",
+        "author": "testuser",
+        "title": "Great Game!",
+        "content": "This is a draft review."
+    }
+
+Publish draft using draft id (local):
+
+    POST http://localhost:3000/api/drafts/publish
+
+    Example body:
+    {"draftId": 1}
