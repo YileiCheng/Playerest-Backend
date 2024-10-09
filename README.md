@@ -20,15 +20,17 @@ Run script
 
     pnpm ts-node fileName.ts
 
-Get all users (local):
+## Local API
+
+Get all users:
 
     GET http://localhost:3000/api/users
 
-Get all reviews (local):
+Get all reviews:
 
     GET http://localhost:3000/api/reviews
 
-Add a review (local):
+Add a review:
 
     POST http://localhost:3000/api/reviews/add
 
@@ -41,46 +43,46 @@ Add a review (local):
         "rate": 5
     }
 
-Get reviews by author (local):
+Get reviews by author:
 
     POST http://localhost:3000/api/reviews/by-author
 
     Example body:
     {"author": "topgamer", "reviewId": "5"}
 
-Login (local):
+Login:
 
     POST http://localhost:3000/api/users/login
 
     Example body:
     {"UserId": "Yilei Cheng", "Password": "yileicheng"}
 
-Register (local):
+Register:
 
     POST http://localhost:3000/api/users/register
 
     Example body:
     {"UserId": "Yilei Cheng 2", "Password": "yileicheng2"}
 
-Get all comments (local):
+Get all comments:
 
     GET http://localhost:3000/api/comments
 
-Get comments by reviewId (local):
+Get comments by reviewId:
 
     POST http://localhost:3000/api/comments/review
 
     Example body:
     {"reviewId": 5}
 
-Get a list of relevant reviews by query - SEARCH (local):
+Get a list of relevant reviews by query - SEARCH:
 
     POST http://localhost:3000/api/reviews/search
 
     Example body:
     {"query": "game"}
 
-Add draft (local):
+Add draft:
 
     POST http://localhost:3000/api/drafts/store
 
@@ -92,9 +94,32 @@ Add draft (local):
         "content": "This is a draft review."
     }
 
-Publish draft using draft id (local):
+Publish draft using draft id:
 
     POST http://localhost:3000/api/drafts/publish
 
     Example body:
     {"draftId": 1}
+
+Upload image to AWS s3 bucket:
+
+    POST http://localhost:3000/api/reviews/upload
+
+    // Create form data object
+    const formData = new FormData();
+    formData.append('image', selectedFile);
+
+Example usage:
+
+    const response = await axios.post('http://localhost:3000/upload', formData, {
+    headers: {
+        'Content-Type': 'multipart/form-data',
+    },
+    });
+
+Example response:
+
+    {
+        "message": "Image uploaded successfully!",
+        "imageUrl": "https://plaverest-user-images.s3.eu-north-1.amazonaws.com/images/1234567890.png"
+    }
