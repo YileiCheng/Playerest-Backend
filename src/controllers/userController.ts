@@ -4,6 +4,7 @@ import {
   registerUser,
   loginUser,
 } from "../services/dynamoService";
+import { signUp } from "aws-amplify/auth"
 
 export const getAllUsersHandler = async (
   req: Request,
@@ -56,5 +57,33 @@ export const registerUserHandler = async (
     res.status(201).json(result);
   } catch (error) {
     res.status(500).json({ error: "Error registering user" });
+  }
+};
+
+export const signUpHandler = async (req: Request, res: Response) => {
+  const { email, username, password } = req.body;
+
+  try {
+    // Call AWS Amplify's signUp function
+    const signUpResponse = await signUp({
+      username: username,
+      password: password,
+      options: {
+        userAttributes: {
+          email: email,
+        },
+      }
+    });
+
+    res.status(201).json({
+      message: 'User signed up successfully!',
+      signUpResponse,
+    });
+  } catch (error) {
+    console.error('Error signing up:', error);
+    res.status(500).json({
+      message: 'Sign up failed',
+      error: error,
+    });
   }
 };

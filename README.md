@@ -64,6 +64,19 @@ Register:
     Example body:
     {"UserId": "Yilei Cheng 2", "Password": "yileicheng2"}
 
+SignUp:
+
+    POST http://localhost:3000/api/users/signup
+
+    Example body:
+    {
+        "email": "test@example.com",
+        "username": "testuser",
+        "password": "password123"
+    }
+    Test Example in FrontEnd:
+    https://docs.amplify.aws/react/build-a-backend/auth/connect-your-frontend/using-the-authenticator/
+
 Get all comments:
 
     GET http://localhost:3000/api/comments
@@ -104,7 +117,7 @@ Publish draft using draft id:
 Upload image to AWS s3 bucket:
 
     POST http://localhost:3000/api/reviews/upload
-    
+
     Example usage:
     // Create form data object
     const formData = new FormData();
@@ -114,7 +127,7 @@ Upload image to AWS s3 bucket:
         'Content-Type': 'multipart/form-data',
     },
     });
-    
+
     Example response:
     {
         "message": "Image uploaded successfully!",

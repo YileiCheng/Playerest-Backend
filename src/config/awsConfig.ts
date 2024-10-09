@@ -1,6 +1,7 @@
 import AWS from "aws-sdk";
 import { S3Client } from '@aws-sdk/client-s3';
 import dotenv from 'dotenv';
+import { Amplify } from 'aws-amplify';
 
 dotenv.config(); // This loads the variables from .env into process.env
 
@@ -19,5 +20,32 @@ const s3Client = new S3Client({
     },
   });
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
+
+Amplify.configure({
+  Auth: {
+    Cognito: {
+      userPoolId: process.env.AWS_USERPOOL_ID!,
+      userPoolClientId: process.env.AWS_USERPOOL_APP_CLIENT_ID!,
+      identityPoolId: process.env.AWS_IDENTITY_POOL_ID!,
+      loginWith: {
+        email: true,
+      },
+      signUpVerificationMethod: "code",
+      userAttributes: {
+        email: {
+          required: true,
+        },
+      },
+      allowGuestAccess: true,
+      passwordFormat: {
+        minLength: 8,
+        requireLowercase: false,
+        requireUppercase: false,
+        requireNumbers: false,
+        requireSpecialCharacters: false,
+      },
+    }
+  },
+});
 
 export { s3Client, dynamoDB };
