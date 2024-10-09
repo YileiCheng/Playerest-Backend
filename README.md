@@ -109,16 +109,14 @@ Upload image to AWS s3 bucket:
     const formData = new FormData();
     formData.append('image', selectedFile);
 
-Example usage:
-
+    Example usage:
     const response = await axios.post('http://localhost:3000/upload', formData, {
     headers: {
         'Content-Type': 'multipart/form-data',
     },
     });
-
-Example response:
-
+    
+    Example response:
     {
         "message": "Image uploaded successfully!",
         "imageUrl": "https://plaverest-user-images.s3.eu-north-1.amazonaws.com/images/1234567890.png"
