@@ -1,7 +1,7 @@
 import AWS from "aws-sdk";
 import { S3Client } from '@aws-sdk/client-s3';
-import dotenv from 'dotenv';
 import { Amplify } from 'aws-amplify';
+import dotenv from 'dotenv';
 
 dotenv.config(); // This loads the variables from .env into process.env
 

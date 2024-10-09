@@ -50,7 +50,7 @@ Get reviews by author:
     Example body:
     {"author": "topgamer", "reviewId": "5"}
 
-Login:
+<!-- Login:
 
     POST http://localhost:3000/api/users/login
 
@@ -62,7 +62,7 @@ Register:
     POST http://localhost:3000/api/users/register
 
     Example body:
-    {"UserId": "Yilei Cheng 2", "Password": "yileicheng2"}
+    {"UserId": "Yilei Cheng 2", "Password": "yileicheng2"} -->
 
 SignUp:
 
@@ -76,6 +76,16 @@ SignUp:
     }
     Test Example in FrontEnd:
     https://docs.amplify.aws/react/build-a-backend/auth/connect-your-frontend/using-the-authenticator/
+
+SignIn:
+
+    POST http://localhost:3000/api/users/signin
+
+    Example body:
+    {
+        "username": "testuser",
+        "password": "password123"
+    }
 
 Get all comments:
 

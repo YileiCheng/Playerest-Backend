@@ -1,6 +1,9 @@
 import multer from "multer";
 import multerS3 from "multer-s3";
 import { s3Client } from "../config/awsConfig";
+import dotenv from 'dotenv';
+
+dotenv.config(); // This loads the variables from .env into process.env
 
 const bucketName = process.env.AWS_BUCKET_NAME;
 
