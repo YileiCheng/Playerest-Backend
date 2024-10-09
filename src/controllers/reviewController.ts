@@ -9,3 +9,14 @@ export const getAllReviewsHandler = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Unable to retrieve orders" });
   }
 };
+
+export const uploadImageHandler = async (req: Request, res: Response) => {
+  if (!req.file) {
+    res.status(400).json({ message: 'No file uploaded' });
+  }
+
+  res.status(200).send({
+    message: 'Image uploaded successfully!',
+    imageUrl: (req.file as any).location, // S3 image URL
+  });
+};
